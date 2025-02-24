@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancient One - Journey Through Time</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d0d2b, #1a1a3d);
+            color: #e0e0ff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #home {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #home h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        #home p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .explore-btn {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            background: none;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 50px;
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            background: #00ffff;
+            color: #0d0d2b;
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px #00ffff; }
+            50% { box-shadow: 0 0 20px #00ffff; }
+            100% { box-shadow: 0 0 5px #00ffff; }
+        }
+
+        #timeline {
+            display: none;
+            min-height: 100vh;
+            padding: 80px 20px;
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .event {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid #00ffff;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .event:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #00ffff;
+        }
+
+        .event h3 {
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+
+        .event p {
+            font-size: 1.1rem;
+        }
+
+        /* Pop-up Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #1a1a3d;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #00ffff;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 0 20px #00ffff;
+        }
+
+        .modal-content h3 {
+            color: #00ffff;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #00ffff;
+            color: #0d0d2b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #e0e0ff;
+        }
+
+        /* Add Event Form Styles */
+        #add-event-form {
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid #00ffff;
+        }
+
+        #add-event-form input, #add-event-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #0d0d2b;
+            border: 1px solid #00ffff;
+            color: #e0e0ff;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        #add-event-form button {
+            padding: 10px 20px;
+            background: #00ffff;
+            color: #0d0d2b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #add-event-form button:hover {
+            background: #e0e0ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #b0b0ff;
+        }
+
+        footer a {
+            color: #00ffff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            #home h1 { font-size: 2.5rem; }
+            #home p { font-size: 1rem; }
+            .explore-btn { font-size: 1.2rem; padding: 12px 30px; }
+            .event h3 { font-size: 1.3rem; }
+            .event p { font-size: 0.9rem; }
+            .modal-content { max-width: 90%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Home Page -->
+    <section id="home">
+        <img src="one.jpg" alt="Ancient One Logo" style="width: 150px; margin-bottom: 20px;">
+        <h1>Ancient One</h1>
+        <p>Trace the pulse of existence—from 4000 BCE to the infinite horizon. Every event, every shift, every story of Earth and humanity awaits.</p>
+        <button class="explore-btn" onclick="showTimeline()">Tap to Explore</button>
+    </section>
+
+    <!-- Timeline Page -->
+    <section id="timeline">
+        <div class="timeline-container">
+            <!-- Add Event Form -->
+            <div id="add-event-form">
+                <h3>Add New Event</h3>
+                <input type="text" id="new-year" placeholder="Year (e.g., 1200 BCE)">
+                <input type="text" id="new-title" placeholder="Event Title">
+                <textarea id="new-desc" placeholder="Event Description" rows="4"></textarea>
+                <button onclick="addEvent()">Add Event</button>
+            </div>
+            <!-- Timeline Events -->
+            <div id="timeline-content"></div>
+        </div>
+    </section>
+
+    <!-- Pop-up Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-desc"></p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Designed by Kofi Fosu | <a href="mailto:cosmoscoderr@gmail.com">cosmoscoderr@gmail.com</a>
+    </footer>
+
+    <script>
+        // Initial event data
+        let events = [
+            { year: "4000 BCE", title: "Creation Begins", desc: "The dawn of existence. Early humans emerge, laying the groundwork for civilization. Tribes form, stars guide their way, and the first sparks of culture ignite." },
+            { year: "3100 BCE", title: "Rise of Mesopotamia", desc: "The first cities rise in Sumer. Ziggurats pierce the sky, cuneiform is born, and the wheel turns for the first time." },
+            { year: "2700 BCE", title: "Great Pyramid of Giza", desc: "Pharaoh Khufu’s monument stands tall, a testament to human ambition and engineering under the blazing Egyptian sun." },
+            { year: "733 BCE", title: "Assyrian Conquest of Israel", desc: "Assyria storms through, shattering the 12 tribes. Exile begins, reshaping the ancient Near East forever." },
+            { year: "Year 1", title: "Birth of Jesus Christ", desc: "A star shines over Bethlehem. The birth of Christ marks a new era, rippling through time and faith." },
+            { year: "500 CE", title: "Medieval Warm Period Begins", desc: "Earth warms, crops flourish in Europe, and Vikings sail further. A climate shift alters history’s course." },
+            { year: "2025 CE", title: "Present Day", desc: "AI surges, humanity reaches for Mars, and the future unfolds in neon-lit uncertainty." }
+        ];
+
+        // Populate timeline with events
+        function populateTimeline() {
+            const container = document.getElementById('timeline-content');
+            container.innerHTML = ''; // Clear existing content
+            events.forEach((event, index) => {
+                const eventDiv = document.createElement('div');
+                eventDiv.classList.add('event');
+                eventDiv.innerHTML = `
+                    <h3>${event.year} - ${event.title}</h3>
+                    <p>${event.desc.split('.')[0] + '.'}</p> <!-- Show first sentence as preview -->
+                `;
+                eventDiv.onclick = () => showModal(event); // Tap/click to show details
+                container.appendChild(eventDiv);
+            });
+        }
+
+        // Show timeline and load events
+        function showTimeline() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('timeline').style.display = 'block';
+            populateTimeline();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show modal with event details
+        function showModal(event) {
+            document.getElementById('modal-title').textContent = `${event.year} - ${event.title}`;
+            document.getElementById('modal-desc').textContent = event.desc;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Add new event in real time
+        function addEvent() {
+            const year = document.getElementById('new-year').value;
+            const title = document.getElementById('new-title').value;
+            const desc = document.getElementById('new-desc').value;
+
+            if (year && title && desc) {
+                events.push({ year, title, desc });
+                populateTimeline(); // Refresh timeline
+                document.getElementById('new-year').value = '';
+                document.getElementById('new-title').value = '';
+                document.getElementById('new-desc').value = ''; // Clear form
+            } else {
+                alert('Please fill in all fields!');
+            }
+        }
+
+        // Load futuristic font
+        const link = document.createElement('link');
+        link.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap';
+        link.rel = 'stylesheet';
+        document.head.appendChild(link);
+    </script>
+</body>
+</html>
